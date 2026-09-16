@@ -256,7 +256,9 @@ func decodeANMF(chunkData io.Reader, chunkLen uint32) (*AnimFrame, error) {
 		if err != nil {
 			return nil, err
 		}
-		subFourCC, subChunkData, _, err = subReader.Next()
+		// The image sub-chunk follows ALPH, so subChunkLen must be
+		// updated to the VP8/VP8L length as well.
+		subFourCC, subChunkData, subChunkLen, err = subReader.Next()
 		if err != nil {
 			return nil, err
 		}
